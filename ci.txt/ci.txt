@@ -2,10 +2,8 @@ pipeline {
     agent any
     
     environment {
-        GIT_REPO_URL = 'https://github.com/yourusername/your-repo.git'
-        GIT_CREDENTIALS_ID = 'your-git-credentials-id'
-        CHECKOUT_PATH = '/path/to/checkout'
-        MAVEN_TOOL = 'Maven-3.8.3'
+        GIT_REPO_URL = 'https://github.com/philip-git-07/git_learn1.git'
+        MAVEN_TOOL = 'M3'
     }
     
     stages {
@@ -13,7 +11,7 @@ pipeline {
             steps {
                 checkout([$class: 'GitSCM', 
                           branches: [[name: '*/master']], 
-                          userRemoteConfigs: [[url: env.GIT_REPO_URL, credentialsId: env.GIT_CREDENTIALS_ID]]])
+                          userRemoteConfigs: [[url: env.GIT_REPO_URL]]])
             }
         }
         
@@ -21,10 +19,7 @@ pipeline {
             steps {
                 script {
                     def mvnHome = tool name: env.MAVEN_TOOL, type: 'hudson.tasks.Maven$MavenInstallation'
-                    
-                    dir(env.CHECKOUT_PATH) {
-                        sh "${mvnHome}/bin/mvn clean install"
-                    }
+                    sh "${mvnHome} clean install"   
                 }
             }
         }
